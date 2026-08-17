@@ -30,7 +30,6 @@ import { DataSourceOptions } from 'typeorm';
       }),
       dataSourceFactory: async (options) =>
         createTransactionalDataSourceService(
-          ((options as any)?.host as string) || 'database',
           options as DataSourceOptions,
         ),
     }),
