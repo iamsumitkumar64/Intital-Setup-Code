@@ -10,13 +10,15 @@ venv/
 __pycache__/
 
 # Build/Dist
+.next/
+out/
 dist/
 build/
 *.log
 *.sqlite
 
 # Environment/Secrets
-# .env
+.env
 .env.local
 .env.*.local
 .aws/
