@@ -3,10 +3,10 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { AllExceptionsFilter } from './infrastructure/filters/all-exceptions.filter';
 import { ConfigService } from '@nestjs/config';
-import { initializeTransactionalContext } from 'typeorm-transactional';
+import { initializeTransactionalContext, StorageDriver } from 'typeorm-transactional';
 
 async function bootstrap() {
-  initializeTransactionalContext();
+  initializeTransactionalContext({ storageDriver: StorageDriver.ASYNC_LOCAL_STORAGE });
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
