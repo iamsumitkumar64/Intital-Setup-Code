@@ -60,6 +60,8 @@ FROM ${NODE_IMAGE} AS production
 
 WORKDIR /app
 
+RUN apk add --no-cache dumb-init
+
 # Create a non-root user and set working directory ownership
 RUN addgroup -S myGroup && adduser -S myUser -G myGroup && chown -R myUser:myGroup /app
 
@@ -82,4 +84,4 @@ EXPOSE ${PORT}
 ENV NODE_ENV=production
 
 # Start the application
-CMD ["node", "dist/main.js"]
+CMD ["dumb-init", "node", "dist/main.js"]
