@@ -9,7 +9,6 @@ export interface User {
 
 export interface UserState {
   user: User | null
-  token: string
   loading: boolean
   error: string | null
   status: "pending" | "succeed" | "rejected"

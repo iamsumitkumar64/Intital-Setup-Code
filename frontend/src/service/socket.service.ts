@@ -1,12 +1,14 @@
 import { io, Socket } from "socket.io-client";
+import Cookies from "js-cookie";
 
 let socket: Socket | null = null;
 
-export const connectSocket = (token: string): Socket => {
+export const connectSocket = (token?: string): Socket => {
     const socketUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8090";
+    const authToken = token || Cookies.get("token");
 
     socket = io(socketUrl, {
-        auth: { token }
+        auth: { token: authToken }
     });
 
     return socket;
