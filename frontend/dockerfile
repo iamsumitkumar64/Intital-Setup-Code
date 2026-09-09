@@ -22,7 +22,6 @@ ENV NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
 ENV NEXT_PUBLIC_FRONTEND_URL=${NEXT_PUBLIC_FRONTEND_URL}
 ENV NEXT_PUBLIC_DEFAULT_PAGE=${NEXT_PUBLIC_DEFAULT_PAGE}
 ENV NEXT_PUBLIC_DEFAULT_LIMIT=${NEXT_PUBLIC_DEFAULT_LIMIT}
-ENV NEXT_TELEMETRY_DISABLED=1
 ENV HOSTNAME="0.0.0.0"
 
 # default node user owns /app
@@ -40,9 +39,6 @@ RUN npm ci
 
 # Copy source files
 COPY --chown=node:node . .
-
-# Build the Next.js application
-RUN npm run build
 
 # Expose the application port
 EXPOSE ${PORT}
@@ -64,7 +60,19 @@ CMD ["npm", "run", "dev"]
 
 
 
-# Stage 3: Production runtime
+# Stage 3: Build
+FROM base AS builder
+
+# Build the NextJS application
+RUN npm run build
+
+
+
+
+
+
+
+# Stage 4: Production runtime
 FROM ${NODE_IMAGE} AS production
 
 WORKDIR /app
@@ -81,10 +89,10 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# Copy built application output from base
-COPY --from=base --chown=node:node /app/public ./public
-COPY --from=base --chown=node:node /app/.next/standalone ./
-COPY --from=base --chown=node:node /app/.next/static ./.next/static
+# Copy built application output from builder
+COPY --from=builder --chown=node:node /app/public ./public
+COPY --from=builder --chown=node:node /app/.next/standalone ./
+COPY --from=builder --chown=node:node /app/.next/static ./.next/static
 
 # Switch to default non-root user
 USER node

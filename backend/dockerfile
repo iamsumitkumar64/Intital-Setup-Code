@@ -30,9 +30,6 @@ RUN npm ci
 COPY --chown=node:node tsconfig.json tsconfig.build.json nest-cli.json ./
 COPY --chown=node:node src/ ./src/
 
-# Build the NestJS application
-RUN npm run build
-
 # Expose the application port
 EXPOSE ${PORT}
 
@@ -56,7 +53,20 @@ CMD ["npm", "run", "start:dev"]
 
 
 
-# Stage 3: Production runtime
+# Stage 3: Build
+FROM base AS builder
+
+# Build the NestJS application
+RUN npm run build
+
+
+
+
+
+
+
+
+# Stage 4: Production runtime
 FROM ${NODE_IMAGE} AS production
 
 WORKDIR /app
@@ -80,8 +90,8 @@ USER node
 # Clean install production dependencies
 RUN npm ci --omit=dev
 
-# Copy compiled build output from base
-COPY --from=base --chown=node:node /app/dist ./dist
+# Copy compiled build output from builder
+COPY --from=builder --chown=node:node /app/dist ./dist
 
 # Expose the application port
 EXPOSE ${PORT}
