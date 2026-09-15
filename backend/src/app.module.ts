@@ -57,6 +57,7 @@ export class AppModule implements NestModule {
       .exclude(
         { path: 'auth/login', method: RequestMethod.ALL },
         { path: 'auth/register', method: RequestMethod.ALL },
+        { path: 'auth/logout', method: RequestMethod.ALL },
       )
       .forRoutes('*');
   }

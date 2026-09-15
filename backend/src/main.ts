@@ -4,10 +4,13 @@ import { ValidationPipe } from '@nestjs/common';
 import { AllExceptionsFilter } from './infrastructure/filters/all-exceptions.filter';
 import { ConfigService } from '@nestjs/config';
 import { initializeTransactionalContext, StorageDriver } from 'typeorm-transactional';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   initializeTransactionalContext({ storageDriver: StorageDriver.ASYNC_LOCAL_STORAGE });
   const app = await NestFactory.create(AppModule);
+
+  app.use(cookieParser());
 
   const configService = app.get(ConfigService);
 

@@ -8,11 +8,13 @@ import { Server, Socket } from 'socket.io';
 import { UserRepository } from 'src/infrastructure/repository/user.repository';
 import { Injectable } from '@nestjs/common';
 import { JwtHelperService } from '../service/jwt.service';
+import { CookieService } from '../service/cookie.service';
 
 @Injectable()
 @WebSocketGateway({
     cors: {
-        origin: '*',
+        origin: true,
+        credentials: true,
     },
 })
 export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
@@ -29,13 +31,15 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
 
     async handleConnection(client: Socket) {
         try {
-            const token = client.handshake.auth.token || client.handshake.headers.authorization;
+            const token = client.handshake.auth.token ||
+                CookieService.extractTokenFromHeader(client.handshake.headers.cookie) ||
+                client.handshake.headers.authorization;
             if (!token) {
                 client.disconnect();
                 return;
             }
 
-            const decoded = await this.jwtHelperService.verifyJwtToken(token);
+            const decoded = await this.jwtHelperService.verifyJwtToken(token.startsWith('Bearer ') ? token.substring(7) : token);
             const user = await this.userRepo.findByUuid(decoded.uuid);
 
             if (!user) {

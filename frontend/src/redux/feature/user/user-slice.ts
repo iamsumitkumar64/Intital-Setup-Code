@@ -45,7 +45,6 @@ const authSlice = createSlice({
                     state.user = action.payload.user;
                     state.error = null;
                     state.status = "succeed";
-                    Cookies.set("token", action.payload.access_token);
                     Cookies.set("role", action.payload.user.role);
                 },
                 rejected: (state, action) => {
@@ -67,7 +66,6 @@ const authSlice = createSlice({
                     state.user = action.payload.user;
                     state.status = "succeed";
                     state.error = null;
-                    Cookies.set("token", action.payload.access_token);
                     Cookies.set("role", action.payload.user.role);
                 },
                 rejected: (state, action) => {

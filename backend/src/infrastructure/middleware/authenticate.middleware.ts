@@ -13,13 +13,13 @@ export class AuthenticateMiddleware implements NestMiddleware {
     async use(req: Request, res: Response, next: NextFunction) {
         try {
             // fetched token using req
-            const token = req.headers.authorization || req.headers.Authorization;
+            const token = req.cookies?.token || req.headers.authorization || req.headers.Authorization;
             if (!token || Array.isArray(token)) {
                 throw new HttpException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
 
             //verify token using jwt
-            const user = await this.jwtHelpService.verifyJwtToken(token ?? '');
+            const user = await this.jwtHelpService.verifyJwtToken(token.startsWith('Bearer ') ? token.substring(7) : token);
             if (!user) {
                 throw new HttpException("invalid token found", HttpStatus.UNAUTHORIZED);
             }

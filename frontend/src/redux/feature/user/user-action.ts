@@ -63,6 +63,10 @@ export const logoutUser = createAsyncThunk(
     "auth/logout",
     async (_, { rejectWithValue }) => {
         try {
+            await fetch(`${BACKEND_API_URL}/auth/logout`, {
+                method: "POST",
+                credentials: "include"
+            })
             const { persistor } = await import("@/redux/store");
             await persistor.purge();
             return null
