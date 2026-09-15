@@ -5,12 +5,10 @@ import * as cookie from 'cookie';
 
 @Injectable()
 export class CookieService {
-  constructor(private readonly configService?: ConfigService) {}
+  constructor(private readonly configService: ConfigService) {}
 
   getCookieOptions(): CookieOptions {
-    const isProd =
-      this.configService?.get<string>('NODE_ENV') === 'production' ||
-      process.env.NODE_ENV === 'production';
+    const isProd = this.configService.get<string>('NODE_ENV') === 'production';
     return {
       httpOnly: true,
       secure: isProd,
