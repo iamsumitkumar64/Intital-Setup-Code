@@ -13,7 +13,7 @@ import { CookieService } from '../service/cookie.service';
 @Injectable()
 @WebSocketGateway({
     cors: {
-        origin: true,
+        origin: process.env.FRONTEND_URL || 'http://localhost:3000',
         credentials: true,
     },
 })

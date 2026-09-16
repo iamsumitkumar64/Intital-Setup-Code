@@ -38,7 +38,7 @@ import { DataSourceOptions } from 'typeorm';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_REGISTER_SECRET') || 'cdcwrg3mNJyUKpvAvd3L9psS8wXMzcm4nNbA4ka1vneueuNSsFirdqft3goL7',
+        secret: configService.get<string>('JWT_REGISTER_SECRET'),
       }),
       global: true,
     }),

@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { AllExceptionsFilter } from './infrastructure/filters/all-exceptions.filter';
+import { CommonExceptionFilter } from './infrastructure/filter/common-exception.filter';
 import { ConfigService } from '@nestjs/config';
 import { initializeTransactionalContext, StorageDriver } from 'typeorm-transactional';
 import cookieParser from 'cookie-parser';
@@ -18,7 +18,7 @@ async function bootstrap() {
     origin: [configService.get<string>('FRONTEND_URL') ?? 'http://localhost:3000'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'authorization'],
+    allowedHeaders: ['Content-Type', 'authorization'],
   });
 
   app.useGlobalPipes(new ValidationPipe({
@@ -28,7 +28,7 @@ async function bootstrap() {
     transform: true,
   }));
 
-  app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalFilters(new CommonExceptionFilter());
 
   const port = configService.get<number>('PORT') ?? 8090;
   await app.listen(port);

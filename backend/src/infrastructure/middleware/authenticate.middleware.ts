@@ -13,7 +13,7 @@ export class AuthenticateMiddleware implements NestMiddleware {
     async use(req: Request, res: Response, next: NextFunction) {
         try {
             // fetched token using req
-            const token = req.cookies?.token || req.headers.authorization || req.headers.Authorization;
+            const token = req.cookies?.token || req.headers.authorization;
             if (!token || Array.isArray(token)) {
                 throw new HttpException("Unauthorized", HttpStatus.UNAUTHORIZED);
             }
