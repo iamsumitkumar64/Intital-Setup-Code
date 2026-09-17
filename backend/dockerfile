@@ -14,6 +14,9 @@ WORKDIR /app
 # Environment variables
 ENV HOSTNAME="0.0.0.0"
 
+# default node user owns /app
+RUN chown -R node:node /app
+
 # Copy dependency files
 COPY --chown=node:node package.json package-lock.json ./
 
@@ -70,6 +73,9 @@ WORKDIR /app
 
 # Install dumb-init for proper signal forwarding
 RUN apk add --no-cache dumb-init
+
+# Ensure default node user owns /app
+RUN chown -R node:node /app
 
 # Environment variables
 ENV NODE_ENV=production

@@ -24,6 +24,9 @@ ENV NEXT_PUBLIC_DEFAULT_PAGE=${NEXT_PUBLIC_DEFAULT_PAGE}
 ENV NEXT_PUBLIC_DEFAULT_LIMIT=${NEXT_PUBLIC_DEFAULT_LIMIT}
 ENV HOSTNAME="0.0.0.0"
 
+# default node user owns /app
+RUN chown -R node:node /app
+
 # Copy dependency files
 COPY --chown=node:node package.json package-lock.json ./
 COPY --chown=node:node next.config.ts /app/next.config.ts
@@ -76,6 +79,9 @@ WORKDIR /app
 
 # Install dumb-init for proper signal forwarding
 RUN apk add --no-cache dumb-init
+
+# default node user owns /app
+RUN chown -R node:node /app
 
 # Environment variables
 ENV NODE_ENV=production
