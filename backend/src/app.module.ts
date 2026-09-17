@@ -13,6 +13,8 @@ import { JwtHelperService } from './infrastructure/service/jwt.service';
 import { AuthModule } from './feature/auth/auth.module';
 import { createTransactionalDataSourceService } from './infrastructure/service/typeorm-transactional.service';
 import { DataSourceOptions } from 'typeorm';
+import { UploadModule } from './feature/upload/upload.module';
+import { CloudinaryService } from './infrastructure/service/cloudinary.service';
 
 @Module({
   imports: [
@@ -46,9 +48,16 @@ import { DataSourceOptions } from 'typeorm';
     //Modules
     AuthModule,
     SocketModule,
+    UploadModule,
   ],
   controllers: [AppController],
-  providers: [AppService, BcryptService, UserRepository, JwtHelperService],
+  providers: [
+    AppService,
+    BcryptService,
+    UserRepository,
+    JwtHelperService,
+    CloudinaryService,
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
