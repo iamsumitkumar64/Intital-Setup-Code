@@ -8,6 +8,7 @@ ARG PORT=8090
 
 # Stage 1: Base runtime
 FROM ${NODE_IMAGE} AS base
+ARG PORT=8090
 
 WORKDIR /app
 
@@ -68,6 +69,7 @@ RUN npm run build
 
 # Stage 4: Production runtime
 FROM ${NODE_IMAGE} AS production
+ARG PORT=8090
 
 WORKDIR /app
 

@@ -8,6 +8,7 @@ ARG PORT=3000
 
 # Stage 1: Base runtime
 FROM ${NODE_IMAGE} AS base
+ARG PORT=3000
 
 WORKDIR /app
 
@@ -74,6 +75,7 @@ RUN npm run build
 
 # Stage 4: Production runtime
 FROM ${NODE_IMAGE} AS production
+ARG PORT=3000
 
 WORKDIR /app
 

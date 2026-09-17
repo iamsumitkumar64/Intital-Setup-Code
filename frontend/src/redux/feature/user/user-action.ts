@@ -3,7 +3,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { SignupSchemaType } from "@/schemas/signup"
 
-const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8090"
 
 export const signupUser = createAsyncThunk(
     "auth/signup",

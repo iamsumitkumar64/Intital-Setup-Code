@@ -1,6 +1,10 @@
 name: "setup-backend"
 
 services:
+  database:
+    ports:
+      - "5432:5432"
+
   backend:
     build:
       target: dev

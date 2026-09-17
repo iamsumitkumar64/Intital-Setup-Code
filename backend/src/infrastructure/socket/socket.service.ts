@@ -31,7 +31,7 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
 
     async handleConnection(client: Socket) {
         try {
-            const token = client.handshake.auth.token ||
+            const token = client.handshake.auth?.token ||
                 CookieService.extractTokenFromHeader(client.handshake.headers.cookie) ||
                 client.handshake.headers.authorization;
             if (!token) {

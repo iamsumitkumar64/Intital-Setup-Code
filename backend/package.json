@@ -12,6 +12,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "start:migrate:prod": "npm run migration:run && node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -21,8 +22,8 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "seed": "node dist/infrastructure/database/seed/seeder.seed.js",
     "migration:generate": "npm run typeorm -- -d dist/infrastructure/database/data-source.js migration:generate src/infrastructure/database/migrations/InitMigration",
-    "migration:run": "npm run typeorm -- -d dist/infrastructure/database/data-source.js migration:run",
-    "migration:revert": "npm run typeorm -- -d dist/infrastructure/database/data-source.js migration:revert"
+    "migration:run": "typeorm migration:run -d dist/infrastructure/database/data-source.js",
+    "migration:revert": "typeorm migration:revert -d dist/infrastructure/database/data-source.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.28",

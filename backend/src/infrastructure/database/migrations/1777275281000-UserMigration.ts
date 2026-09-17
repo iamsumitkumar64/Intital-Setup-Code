@@ -4,6 +4,8 @@ export class UserMigration1777275281000 implements MigrationInterface {
     name = "UserMigration1777275281000";
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
+
         await queryRunner.query(
             `CREATE TYPE "public"."user_role_enum" AS ENUM('user', 'company')`
         );
