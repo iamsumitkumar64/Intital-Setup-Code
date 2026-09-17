@@ -1,5 +1,5 @@
 ARG NODE_IMAGE=node:24.15.0-alpine
-ARG PORT=3000
+
 
 
 
@@ -8,7 +8,6 @@ ARG PORT=3000
 
 # Stage 1: Base runtime
 FROM ${NODE_IMAGE} AS base
-ARG PORT=3000
 
 WORKDIR /app
 
@@ -25,9 +24,6 @@ ENV NEXT_PUBLIC_DEFAULT_PAGE=${NEXT_PUBLIC_DEFAULT_PAGE}
 ENV NEXT_PUBLIC_DEFAULT_LIMIT=${NEXT_PUBLIC_DEFAULT_LIMIT}
 ENV HOSTNAME="0.0.0.0"
 
-# default node user owns /app
-RUN chown -R node:node /app
-
 # Copy dependency files
 COPY --chown=node:node package.json package-lock.json ./
 COPY --chown=node:node next.config.ts /app/next.config.ts
@@ -42,7 +38,7 @@ RUN npm ci
 COPY --chown=node:node . .
 
 # Expose the application port
-EXPOSE ${PORT}
+EXPOSE 3000
 
 
 
@@ -75,15 +71,11 @@ RUN npm run build
 
 # Stage 4: Production runtime
 FROM ${NODE_IMAGE} AS production
-ARG PORT=3000
 
 WORKDIR /app
 
 # Install dumb-init for proper signal forwarding
 RUN apk add --no-cache dumb-init
-
-# default node user owns /app
-RUN chown -R node:node /app
 
 # Environment variables
 ENV NODE_ENV=production
@@ -100,7 +92,7 @@ COPY --from=builder --chown=node:node /app/.next/static ./.next/static
 USER node
 
 # Expose the application port
-EXPOSE ${PORT}
+EXPOSE 3000
 
 # Start the application
 CMD ["dumb-init", "node", "server.js"]

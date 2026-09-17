@@ -1,5 +1,5 @@
 ARG NODE_IMAGE=node:24.15.0-alpine
-ARG PORT=8090
+
 
 
 
@@ -8,15 +8,11 @@ ARG PORT=8090
 
 # Stage 1: Base runtime
 FROM ${NODE_IMAGE} AS base
-ARG PORT=8090
 
 WORKDIR /app
 
 # Environment variables
 ENV HOSTNAME="0.0.0.0"
-
-# default node user owns /app
-RUN chown -R node:node /app
 
 # Copy dependency files
 COPY --chown=node:node package.json package-lock.json ./
@@ -32,7 +28,7 @@ COPY --chown=node:node tsconfig.json tsconfig.build.json nest-cli.json ./
 COPY --chown=node:node src/ ./src/
 
 # Expose the application port
-EXPOSE ${PORT}
+EXPOSE 8090
 
 
 
@@ -69,15 +65,11 @@ RUN npm run build
 
 # Stage 4: Production runtime
 FROM ${NODE_IMAGE} AS production
-ARG PORT=8090
 
 WORKDIR /app
 
 # Install dumb-init for proper signal forwarding
 RUN apk add --no-cache dumb-init
-
-# Ensure default node user owns /app
-RUN chown -R node:node /app
 
 # Environment variables
 ENV NODE_ENV=production
@@ -96,7 +88,7 @@ RUN npm ci --omit=dev
 COPY --from=builder --chown=node:node /app/dist ./dist
 
 # Expose the application port
-EXPOSE ${PORT}
+EXPOSE 8090
 
 # Start the application
 CMD ["dumb-init", "node", "dist/main.js"]
