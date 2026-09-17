@@ -7,13 +7,16 @@ import {
 import { Server, Socket } from 'socket.io';
 import { UserRepository } from 'src/infrastructure/repository/user.repository';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtHelperService } from '../service/jwt.service';
 import { CookieService } from '../service/cookie.service';
+
+const configService = new ConfigService();
 
 @Injectable()
 @WebSocketGateway({
     cors: {
-        origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+        origin: configService.get<string>('FRONTEND_URL') || 'http://localhost:3000',
         credentials: true,
     },
 })

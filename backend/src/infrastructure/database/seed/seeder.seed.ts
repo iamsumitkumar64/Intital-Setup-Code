@@ -1,7 +1,8 @@
 // import { faker } from '@faker-js/faker';
 import { dataSource, options } from '../data-source';
 import { UserEntity } from '../../../domain/user/user.entity';
-import * as bcrypt from 'bcrypt';
+import { ConfigService } from '@nestjs/config';
+import { BcryptService } from 'src/infrastructure/service/bcrypt.service';
 
 // hardcoded users for all microservices
 const users = [
@@ -26,8 +27,9 @@ async function create() {
 
     await dataSource.initialize();
 
-    const saltRounds = Number(process.env.BCRYPT_SALT_ROUNDS) || 10;
-    const hashedPassword = await bcrypt.hash("123", saltRounds);
+    const configService = new ConfigService();
+    const bcryptService = new BcryptService(configService);
+    const hashedPassword = await bcryptService.hashPassword("123");
 
     const queryRunner = dataSource.createQueryRunner();
     await queryRunner.connect();
