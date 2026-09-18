@@ -18,21 +18,21 @@ export class CookieService {
     };
   }
 
-  setTokenCookie(res: Response, token: string) {
-    res.cookie('token', token, this.getCookieOptions());
+  setCookie(res: Response, name: string, value: string) {
+    res.cookie(name, value, this.getCookieOptions());
   }
 
-  clearTokenCookie(res: Response) {
-    res.clearCookie('token', this.getCookieOptions());
+  clearCookie(res: Response, name: string) {
+    res.clearCookie(name, this.getCookieOptions());
   }
 
-  extractToken(req: Request): string | undefined {
+  resetCookies(req: Request, name: string): string | undefined {
     const cookies = req.cookies as Record<string, string> | undefined;
-    return cookies?.token;
+    return cookies?.[name];
   }
 
-  static extractTokenFromHeader(cookieHeader?: string): string | undefined {
+  static extractFromHeader(cookieHeader: string | undefined, name: string): string | undefined {
     if (!cookieHeader) return undefined;
-    return cookie.parse(cookieHeader).token;
+    return cookie.parse(cookieHeader)[name];
   }
 }

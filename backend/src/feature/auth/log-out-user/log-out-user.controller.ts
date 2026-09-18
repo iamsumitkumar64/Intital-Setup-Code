@@ -9,7 +9,7 @@ export class LogOutUserController {
   @Post()
   @HttpCode(HttpStatus.OK)
   logoutUser(@Res({ passthrough: true }) res: Response) {
-    this.cookieService.clearTokenCookie(res);
+    this.cookieService.clearCookie(res, 'token');
     return { message: 'Logged out successfully' };
   }
 }
