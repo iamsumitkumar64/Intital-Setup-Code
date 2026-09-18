@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { CommonExceptionFilter } from './infrastructure/filter/common-exception.filter';
+import { CommonExceptionFilter } from './common/filter/common-exception.filter';
 import { ConfigService } from '@nestjs/config';
 import { initializeTransactionalContext, StorageDriver } from 'typeorm-transactional';
 import cookieParser from 'cookie-parser';

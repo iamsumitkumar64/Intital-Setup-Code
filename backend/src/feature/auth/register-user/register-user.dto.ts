@@ -1,13 +1,14 @@
 import { IsString, IsEmail, IsNotEmpty, MinLength, IsEnum } from 'class-validator';
-import { Transform } from 'class-transformer';
 import { UserRoleEnum } from 'src/domain/user/user.enum';
+import { NormalizeWhitespace } from 'src/common/validation/transforms';
 
 export class RegisterUserDto {
+    @NormalizeWhitespace()
     @IsString()
     @IsNotEmpty()
     username: string;
 
-    @Transform(({ value }) => value?.toLowerCase().trim())
+    @NormalizeWhitespace({ toLowerCase: true })
     @IsEmail()
     @IsNotEmpty()
     email: string;

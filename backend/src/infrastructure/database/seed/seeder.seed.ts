@@ -2,7 +2,7 @@
 import { dataSource, options } from '../data-source';
 import { UserEntity } from '../../../domain/user/user.entity';
 import { ConfigService } from '@nestjs/config';
-import { BcryptService } from 'src/infrastructure/service/bcrypt.service';
+import { BcryptService } from 'src/common/service/bcrypt.service';
 
 // hardcoded users for all microservices
 const users = [

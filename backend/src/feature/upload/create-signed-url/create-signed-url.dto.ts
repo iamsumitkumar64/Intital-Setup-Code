@@ -1,11 +1,9 @@
 import { IsOptional, IsString } from 'class-validator';
-import { Transform } from 'class-transformer';
+import { NormalizeWhitespace } from 'src/common/validation/transforms';
 
 export class CreateSignedUrlDto {
   @IsOptional()
   @IsString()
-  @Transform(({ value }: { value: unknown }) =>
-    typeof value === 'string' ? value.trim() : undefined,
-  )
+  @NormalizeWhitespace()
   folder?: string;
 }

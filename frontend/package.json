@@ -28,6 +28,7 @@
     "react-slick": "^0.31.0",
     "redux-persist": "^6.0.0",
     "socket.io-client": "^4.8.3",
+    "use-debounce": "^10.1.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {

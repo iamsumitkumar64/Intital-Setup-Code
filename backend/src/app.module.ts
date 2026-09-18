@@ -7,14 +7,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from './infrastructure/repository/user.repository';
 import { AuthenticateMiddleware } from './infrastructure/middleware/authenticate.middleware';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { BcryptService } from './infrastructure/service/bcrypt.service';
+import { BcryptService } from './common/service/bcrypt.service';
 import { SocketModule } from './infrastructure/socket/socket.module';
-import { JwtHelperService } from './infrastructure/service/jwt.service';
+import { JwtHelperService } from './common/service/jwt.service';
 import { AuthModule } from './feature/auth/auth.module';
-import { createTransactionalDataSourceService } from './infrastructure/service/typeorm-transactional.service';
+import { createTransactionalDataSourceService } from './common/service/typeorm-transactional.service';
 import { DataSourceOptions } from 'typeorm';
 import { UploadModule } from './feature/upload/upload.module';
-import { CloudinaryService } from './infrastructure/service/cloudinary.service';
+import { CloudinaryService } from './common/service/cloudinary.service';
 
 @Module({
   imports: [

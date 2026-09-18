@@ -1,8 +1,8 @@
 import { IsString, IsEmail, IsNotEmpty, MinLength } from 'class-validator';
-import { Transform } from 'class-transformer';
+import { NormalizeWhitespace } from 'src/common/validation/transforms';
 
 export class LoginUserDto {
-    @Transform(({ value }) => value?.toLowerCase().trim())
+    @NormalizeWhitespace({ toLowerCase: true })
     @IsEmail()
     @IsNotEmpty()
     email: string;

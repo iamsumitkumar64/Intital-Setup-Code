@@ -1,20 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { UserEntity } from "src/domain/user/user.entity";
 
 @Injectable()
 export class JwtHelperService {
     constructor(private readonly jwtService: JwtService) { }
 
-    async generateJwtToken(userObj: UserEntity) {
-        const payload = {
-            uuid: userObj.uuid,
-            email: userObj.email,
-            username: userObj.username,
-            role: userObj.role
-        };
-
-        return await this.jwtService.signAsync(payload);
+    async generateJwtToken(payload: Record<any, any>) {
+        const { ...plainPayload } = { ...payload };
+        return await this.jwtService.signAsync(plainPayload);
     }
 
     async verifyJwtToken(token: string) {
