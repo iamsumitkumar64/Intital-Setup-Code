@@ -1,8 +1,15 @@
+-> Clean up docker
+    docker container prune -f && docker volume prune -f && docker builder prune -f --all && docker buildx history rm --all
 
--> production docker ($/poc/any) -> docker compose --env-file .env -f docker-compose.yml -f docker-compose.prod.yml up --build 
--> development docker ($/poc/any) -> docker compose --env-file .env -f docker-compose.yml -f docker-compose.dev.yml up --build 
+
+-> Run docker start
+    production stage ($/poc/any) ->
+        docker compose --env-file .env -f docker-compose.yml -f docker-compose.prod.yml up --build 
+    development stage ($/poc/any) ->
+        docker compose --env-file .env -f docker-compose.yml -f docker-compose.dev.yml up --build 
 
 
-For DB Migration 
--> in terminal ($/poc/backend) -> docker compose exec backend sh
-    npm run build && npm run migration:run && npm run seed
+-> For DB Migration 
+    In terminal ($/poc/backend) ->
+        docker compose exec backend sh
+        npm run build && npm run migration:run && npm run seed
