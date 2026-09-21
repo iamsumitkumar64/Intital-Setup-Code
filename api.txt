@@ -1,0 +1,14 @@
+// create signed-url api curl
+
+curl --location --request POST 'localhost:8090/upload/signed-url' \
+--data ''
+
+
+// upload api curl
+
+curl --location --request GET 'https://api.cloudinary.com/v1_1/nn5dgaqb/auto/upload' \
+--form 'timestamp=" 1790553600"' \
+--form 'signature=" 53c9784948a3f6caafc0c91dd5139a6c0848da15"' \
+--form 'folder=" my-app"' \
+--form 'api_key=" 391141955862159"' \
+--form 'file=@"/home/desktop-1/Downloads/demo/instruction.txt"'

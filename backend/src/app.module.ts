@@ -67,6 +67,7 @@ export class AppModule implements NestModule {
         { path: 'auth/login', method: RequestMethod.ALL },
         { path: 'auth/register', method: RequestMethod.ALL },
         { path: 'auth/logout', method: RequestMethod.ALL },
+        { path: 'upload/signed-url', method: RequestMethod.ALL },
       )
       .forRoutes('*');
   }
