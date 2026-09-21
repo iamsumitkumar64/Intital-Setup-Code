@@ -4,9 +4,9 @@ import { CreateSignedUrlHandler } from './create-signed-url.handler';
 import { CloudinaryService } from 'src/infrastructure/service/cloudinary/cloudinary.service';
 
 @Module({
-    imports: [],
-    controllers: [CreateSignedUrlController],
-    providers: [CreateSignedUrlHandler, CloudinaryService],
-    exports: [CreateSignedUrlModule],
+  imports: [],
+  controllers: [CreateSignedUrlController],
+  providers: [CreateSignedUrlHandler, CloudinaryService],
+  exports: [],
 })
 export class CreateSignedUrlModule { }

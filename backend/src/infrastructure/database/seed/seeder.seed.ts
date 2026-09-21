@@ -1,7 +1,7 @@
 // import { faker } from '@faker-js/faker';
 import { BcryptService } from 'src/infrastructure/service/bcrypt/bcrypt.service';
 import { dataSource } from '../../../../orm-config';
-import { UserEntity } from '../../../domain/user/user.entity';
+import { UserEntity } from 'src/domain/user/user.entity';
 import { ConfigService } from '@nestjs/config';
 
 // hardcoded users for all microservices

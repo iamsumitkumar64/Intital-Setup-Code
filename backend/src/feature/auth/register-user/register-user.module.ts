@@ -1,15 +1,15 @@
-import { Module } from "@nestjs/common";
-import { RegisterUserController } from "./register-user.controller";
-import { RegisterUserHandler } from "./register-user.handler";
-import { UserRepository } from "src/infrastructure/repository/user-repository/user-repository";
-import { CookieService } from "src/infrastructure/service/cookie/cookie.service";
-import { JwtHelperService } from "src/infrastructure/service/jwt/jwt.service";
-import { BcryptService } from "src/infrastructure/service/bcrypt/bcrypt.service";
+import { Module } from '@nestjs/common';
+import { RegisterUserController } from './register-user.controller';
+import { RegisterUserHandler } from './register-user.handler';
+import { UserRepository } from 'src/infrastructure/repository/user-repository/user-repository';
+import { CookieService } from 'src/infrastructure/service/cookie/cookie.service';
+import { JwtHelperService } from 'src/infrastructure/service/jwt/jwt.service';
+import { BcryptService } from 'src/infrastructure/service/bcrypt/bcrypt.service';
 
 @Module({
-    imports: [],
-    controllers: [RegisterUserController],
-    providers: [JwtHelperService, UserRepository, RegisterUserHandler, BcryptService, CookieService],
-    exports: [RegisterUserModule],
+  imports: [],
+  controllers: [RegisterUserController],
+  providers: [JwtHelperService, UserRepository, RegisterUserHandler, BcryptService, CookieService],
+  exports: [],
 })
 export class RegisterUserModule { }
