@@ -1,8 +1,8 @@
 // import { faker } from '@faker-js/faker';
-import { dataSource, options } from '../data-source';
+import { BcryptService } from 'src/infrastructure/service/bcrypt/bcrypt.service';
+import { dataSource } from '../../../../orm-config';
 import { UserEntity } from '../../../domain/user/user.entity';
 import { ConfigService } from '@nestjs/config';
-import { BcryptService } from 'src/common/service/bcrypt.service';
 
 // hardcoded users for all microservices
 const users = [
@@ -21,10 +21,6 @@ const users = [
 ];
 
 async function create() {
-    dataSource.setOptions({
-        ...options,
-    });
-
     await dataSource.initialize();
 
     const configService = new ConfigService();

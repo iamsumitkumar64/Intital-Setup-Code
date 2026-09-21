@@ -1,20 +1,20 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { dataSource } from './infrastructure/database/data-source';
+import { dataSource } from '../orm-config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserRepository } from './infrastructure/repository/user.repository';
-import { AuthenticateMiddleware } from './infrastructure/middleware/authenticate.middleware';
+import { UserRepository } from './infrastructure/repository/user-repository/user-repository';
+import { AuthenticateMiddleware } from './infrastructure/middleware/index';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { BcryptService } from './common/service/bcrypt.service';
 import { SocketModule } from './infrastructure/socket/socket.module';
-import { JwtHelperService } from './common/service/jwt.service';
 import { AuthModule } from './feature/auth/auth.module';
-import { createTransactionalDataSourceService } from './common/service/typeorm-transactional.service';
 import { DataSourceOptions } from 'typeorm';
 import { UploadModule } from './feature/upload/upload.module';
-import { CloudinaryService } from './common/service/cloudinary.service';
+import { createTransactionalDataSourceService } from './infrastructure/service/typeorm-transactional/typeorm-transactional.service';
+import { BcryptService } from './infrastructure/service/bcrypt/bcrypt.service';
+import { JwtHelperService } from './infrastructure/service/jwt/jwt.service';
+import { CloudinaryService } from './infrastructure/service/cloudinary/cloudinary.service';
 
 @Module({
   imports: [
