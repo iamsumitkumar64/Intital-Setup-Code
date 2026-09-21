@@ -4,6 +4,7 @@ import { BcryptService } from 'src/infrastructure/service/bcrypt/bcrypt.service'
 import { RegisterUserDto } from './register-user.dto';
 import { JwtHelperService } from 'src/infrastructure/service/jwt/jwt.service';
 import { UserAlreadyExistsException } from 'src/domain/user/exception';
+import { Transactional } from 'typeorm-transactional';
 
 @Injectable()
 export class RegisterUserHandler {
@@ -13,6 +14,7 @@ export class RegisterUserHandler {
     private readonly bcryptService: BcryptService,
   ) { }
 
+  @Transactional()
   async handle(body: RegisterUserDto) {
     // check if already exists using this email
     const isUserExists = await this.userRepo.findByEmail(body.email);

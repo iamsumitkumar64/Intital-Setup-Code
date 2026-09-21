@@ -15,10 +15,6 @@ export class CommonExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    if (exception) {
-      console.log('error -> ', exception);
-    }
-
     let status: number;
     let message: string | string[];
 
@@ -34,11 +30,16 @@ export class CommonExceptionFilter implements ExceptionFilter {
       message = 'Internal server error';
     }
 
-    return response.status(status).json({
+    const formattedResponse = {
       statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
-      message,
-    });
+      message
+    }
+    if (exception) {
+      console.log('\nException -> ', exception, '\nFormatted Exception -> ', formattedResponse);
+    }
+
+    return response.status(status).json(formattedResponse);
   }
 }

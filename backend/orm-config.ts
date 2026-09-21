@@ -1,6 +1,7 @@
 import { DataSource, DataSourceOptions } from "typeorm";
 import { ConfigService } from "@nestjs/config";
 import * as dotenv from 'dotenv';
+import * as path from 'path';
 
 dotenv.config();
 
@@ -13,9 +14,13 @@ export const dataSourceOptions =
             username: configService.get<string>('DB_POSTGRES_USERNAME') || 'postgres',
             password: configService.get<string>('DB_POSTGRES_PASSWORD') || '123',
             database: configService.get<string>('DB_POSTGRES_DATABASE') || 'db',
-            entities: ['dist/domain/*/*.entity{.ts,.js}'],
+            entities: [
+                path.join(__dirname, 'src', 'domain', '**', '*.entity.{js,ts}'),
+            ],
             synchronize: false,
-            migrations: ['dist/infrastructure/database/migrations/*{.ts,.js}'],
+            migrations: [
+                path.join(__dirname, 'src', 'infrastructure', 'database', 'migrations', '*.{js,ts}'),
+            ],
         }
     );
 
