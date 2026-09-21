@@ -1,6 +1,6 @@
 // import { faker } from '@faker-js/faker';
 import { BcryptService } from 'src/infrastructure/service/bcrypt/bcrypt.service';
-import { dataSource } from '../../../../orm-config';
+import { dataSource } from '../orm-config';
 import { UserEntity } from 'src/domain/user/user.entity';
 import { ConfigService } from '@nestjs/config';
 

@@ -15,11 +15,11 @@ export const dataSourceOptions =
             password: configService.get<string>('DB_POSTGRES_PASSWORD') || '123',
             database: configService.get<string>('DB_POSTGRES_DATABASE') || 'db',
             entities: [
-                path.join(__dirname, 'src', 'domain', '**', '*.entity.{js,ts}'),
+                path.join(__dirname, '..', '..', 'domain', '**', '*.entity.{js,ts}'),
             ],
             synchronize: false,
             migrations: [
-                path.join(__dirname, 'src', 'infrastructure', 'database', 'migrations', '*.{js,ts}'),
+                path.join(__dirname, 'migrations', '*.{js,ts}'),
             ],
         }
     );

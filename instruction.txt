@@ -1,5 +1,5 @@
 -> Clean up docker
-    docker container prune -f && docker volume prune -f && docker builder prune -f --all && docker buildx history rm --all
+    docker container prune -f && docker volume prune -f && docker builder prune -f --all && docker buildx history rm --all && docker system prune -f
 
 
 -> Run docker start
