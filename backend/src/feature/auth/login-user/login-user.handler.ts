@@ -11,14 +11,14 @@ import {
 @Injectable()
 export class LoginUserHandler {
   constructor(
-    private readonly userRepo: UserRepository,
+    private readonly userRepository: UserRepository,
     private readonly jwtHelperService: JwtHelperService,
     private readonly bcryptService: BcryptService,
   ) { }
 
   async handle(body: LoginUserDto) {
     // check if user exists using this email
-    const user = await this.userRepo.findByEmail(body.email);
+    const user = await this.userRepository.findByEmail(body.email);
     if (!user) {
       throw new UserNotFoundException();
     }

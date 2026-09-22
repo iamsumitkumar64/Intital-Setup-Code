@@ -9,7 +9,7 @@ import { Transactional } from 'typeorm-transactional';
 @Injectable()
 export class RegisterUserHandler {
   constructor(
-    private readonly userRepo: UserRepository,
+    private readonly userRepository: UserRepository,
     private readonly jwtHelperService: JwtHelperService,
     private readonly bcryptService: BcryptService,
   ) { }
@@ -17,7 +17,7 @@ export class RegisterUserHandler {
   @Transactional()
   async handle(body: RegisterUserDto) {
     // check if already exists using this email
-    const isUserExists = await this.userRepo.findByEmail(body.email);
+    const isUserExists = await this.userRepository.findByEmail(body.email);
     if (isUserExists) {
       throw new UserAlreadyExistsException(body.email);
     }
@@ -26,7 +26,7 @@ export class RegisterUserHandler {
     body.password = await this.bcryptService.hashPassword(body.password);
 
     // register user in DB
-    const registeredUser = await this.userRepo.createUser(body);
+    const registeredUser = await this.userRepository.createUser(body);
 
     // generate token for accessing resources
     const token = await this.jwtHelperService.generateJwtToken(registeredUser);

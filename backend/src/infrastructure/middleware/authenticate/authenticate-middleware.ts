@@ -7,7 +7,7 @@ import { JwtHelperService } from '../../service/jwt/jwt.service';
 export class AuthenticateMiddleware implements NestMiddleware {
     constructor(
         private readonly jwtHelpService: JwtHelperService,
-        private readonly userRepo: UserRepository,
+        private readonly userRepository: UserRepository,
     ) { }
 
     async use(req: Request, res: Response, next: NextFunction) {
@@ -25,7 +25,7 @@ export class AuthenticateMiddleware implements NestMiddleware {
             }
 
             // check account's presence in DB
-            const isExistsAndActiveUser = await this.userRepo.findByUuid(user.uuid);
+            const isExistsAndActiveUser = await this.userRepository.findByUuid(user.uuid);
             if (!isExistsAndActiveUser) {
                 throw new HttpException("account not found", HttpStatus.UNAUTHORIZED);
             }
