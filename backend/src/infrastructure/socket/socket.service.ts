@@ -29,7 +29,7 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
 
     constructor(
         private readonly jwtHelperService: JwtHelperService,
-        private readonly userRepo: UserRepository,
+        private readonly userRepository: UserRepository,
     ) { }
 
     async handleConnection(client: Socket) {
@@ -43,7 +43,7 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
             }
 
             const decoded = await this.jwtHelperService.verifyJwtToken(token.startsWith('Bearer ') ? token.substring(7) : token);
-            const user = await this.userRepo.findByUuid(decoded.uuid);
+            const user = await this.userRepository.findByUuid(decoded.uuid);
 
             if (!user) {
                 client.disconnect();

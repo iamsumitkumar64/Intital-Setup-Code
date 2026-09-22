@@ -6,7 +6,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { DomainException } from 'src/domain/common/exception';
 
 @Catch()
 export class CommonExceptionFilter implements ExceptionFilter {
@@ -21,10 +20,13 @@ export class CommonExceptionFilter implements ExceptionFilter {
     if (exception instanceof HttpException) {
       status = exception.getStatus();
       message = (exception.getResponse() as any).message || exception.message;
-    } else if (exception instanceof DomainException) {
-      const domainEx = exception as DomainException;
-      status = domainEx.statusCode;
-      message = domainEx.message;
+    } else if (
+      exception instanceof Error &&
+      'statusCode' in exception &&
+      typeof (exception as any).statusCode === 'number'
+    ) {
+      status = (exception as any).statusCode;
+      message = exception.message;
     } else {
       status = HttpStatus.INTERNAL_SERVER_ERROR;
       message = 'Internal server error';

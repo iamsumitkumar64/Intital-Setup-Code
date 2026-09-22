@@ -1,10 +1,10 @@
 import { HttpStatus } from '@nestjs/common';
-import { DomainException } from 'src/domain/common/exception';
 
-export class UserAlreadyExistsException extends DomainException {
+export class UserAlreadyExistsException extends Error {
   readonly statusCode = HttpStatus.CONFLICT;
 
   constructor(email: string) {
     super(`User already exists with email: ${email}`);
+    this.name = this.constructor.name;
   }
 }

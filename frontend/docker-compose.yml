@@ -18,5 +18,5 @@ services:
 
 networks:
   setup_network: # backend should start first to create this network
-    name: setup-backend_setup_network
+    name: setup_network
     external: true
