@@ -3,7 +3,7 @@ import type { Response } from "express";
 import { LoginUserHandler } from "./login-user.handler";
 import { LoginUserDto } from "./login-user.dto";
 import { CookieService } from "src/infrastructure/service/cookie/cookie.service";
-
+import { PublicAuthenticate } from "src/infrastructure/decorator";
 
 @Controller('/login')
 export class LoginUserController {
@@ -12,6 +12,7 @@ export class LoginUserController {
         private readonly cookieService: CookieService,
     ) { }
 
+    @PublicAuthenticate()
     @Post()
     async loginUser(@Body() body: LoginUserDto, @Res({ passthrough: true }) res: Response) {
         const { access_token, ...data } = await this.loginUserHandler.handle(body);

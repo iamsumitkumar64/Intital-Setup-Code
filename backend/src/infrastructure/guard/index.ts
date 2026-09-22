@@ -1,1 +1,2 @@
-export * from './role';
+export * from './role/index';
+export * from './authenticate/index';

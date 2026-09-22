@@ -14,6 +14,7 @@ export const dataSourceOptions =
             username: configService.get<string>('DB_POSTGRES_USERNAME') || 'postgres',
             password: configService.get<string>('DB_POSTGRES_PASSWORD') || '123',
             database: configService.get<string>('DB_POSTGRES_DATABASE') || 'db',
+            logging: Boolean(configService.get<boolean>('DB_POSTGRES_LOGGING')) || false,
             entities: [
                 path.join(__dirname, '..', '..', 'domain', '**', '*.entity.{js,ts}'),
             ],

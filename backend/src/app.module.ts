@@ -1,11 +1,10 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { dataSource } from './infrastructure/database/orm-config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from './infrastructure/repository/user-repository/user-repository';
-import { AuthenticateMiddleware } from './infrastructure/middleware/index';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SocketModule } from './infrastructure/socket/socket.module';
 import { AuthModule } from './feature/auth/auth.module';
@@ -15,6 +14,8 @@ import { createTransactionalDataSourceService } from './infrastructure/service/t
 import { BcryptService } from './infrastructure/service/bcrypt/bcrypt.service';
 import { JwtHelperService } from './infrastructure/service/jwt/jwt.service';
 import { CloudinaryService } from './infrastructure/service/cloudinary/cloudinary.service';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthenticateGuard } from './infrastructure/guard';
 
 @Module({
   imports: [
@@ -57,18 +58,10 @@ import { CloudinaryService } from './infrastructure/service/cloudinary/cloudinar
     UserRepository,
     JwtHelperService,
     CloudinaryService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthenticateGuard
+    }
   ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(AuthenticateMiddleware)
-      .exclude(
-        { path: 'auth/login', method: RequestMethod.ALL },
-        { path: 'auth/register', method: RequestMethod.ALL },
-        { path: 'auth/logout', method: RequestMethod.ALL },
-        { path: 'upload/signed-url', method: RequestMethod.ALL },
-      )
-      .forRoutes('*');
-  }
-}
+export class AppModule { }

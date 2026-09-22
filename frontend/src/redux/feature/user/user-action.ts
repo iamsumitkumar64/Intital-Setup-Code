@@ -26,6 +26,7 @@ export const signupUser = createAsyncThunk(
 
             return result
         } catch (error: any) {
+            console.log(error);
             return rejectWithValue(error.message)
         }
     }
@@ -71,6 +72,7 @@ export const logoutUser = createAsyncThunk(
             await persistor.purge();
             return null
         } catch (error: any) {
+            console.log(error);
             return rejectWithValue(error.message)
         }
     }
