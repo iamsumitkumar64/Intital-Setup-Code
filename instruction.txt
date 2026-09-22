@@ -2,6 +2,10 @@
     docker container prune -f && docker volume prune -f && docker builder prune -f --all && docker buildx history rm --all && docker system prune -f
 
 
+-> Install Deps in both folder
+    (cd backend && npm ci) && (cd frontend && npm ci)
+
+
 -> Run docker start
     production stage ($/poc/any) ->
         docker compose --env-file .env -f docker-compose.yml -f docker-compose.prod.yml up --build 
