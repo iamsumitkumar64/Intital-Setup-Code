@@ -9,12 +9,12 @@ export class UserRepository extends Repository<UserEntity> implements IUserRepos
     super(UserEntity, dataSource.createEntityManager());
   }
 
-  async createUser(body: Partial<UserEntity>): Promise<UserEntity> {
+  async createUser(body: Partial<UserEntity>) {
     const user = this.create(body);
     return await this.save(user);
   }
 
-  async findByUuid(uuid: string): Promise<UserEntity | null> {
+  async findByUuid(uuid: string) {
     return await this.findOne({
       where: { uuid },
       select: {
@@ -26,7 +26,7 @@ export class UserRepository extends Repository<UserEntity> implements IUserRepos
     });
   }
 
-  async findByEmail(email: string): Promise<UserEntity | null> {
+  async findByEmail(email: string) {
     return await this.findOne({
       where: { email },
       select: {
