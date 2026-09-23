@@ -15,17 +15,17 @@ const initialState: UserState = {
     status: 'pending'
 }
 
-const authSlice = createSlice({
-    name: "auth",
+const userSlice = createSlice({
+    name: "user",
     initialState,
     reducers: {
-        resetAuth: (state) => {
+        resetUser: (state) => {
             state.user = null;
             state.loading = false;
             state.error = null;
             state.status = "pending";
         },
-        resetAuthError: (state) => {
+        resetUserError: (state) => {
             state.error = null;
             state.status = "pending"
         }
@@ -39,7 +39,7 @@ const authSlice = createSlice({
                 },
                 fulfilled: (state, action) => {
                     state.loading = false;
-                    state.user = action.payload.user;
+                    state.user = action.payload.data.user;
                     state.error = null;
                     state.status = "succeed";
                 },
@@ -57,7 +57,7 @@ const authSlice = createSlice({
                 },
                 fulfilled: (state, action) => {
                     state.loading = false;
-                    state.user = action.payload.user;
+                    state.user = action.payload.data.user;
                     state.status = "succeed";
                     state.error = null;
                 },
@@ -87,5 +87,5 @@ const authSlice = createSlice({
     }
 })
 
-export const { resetAuth, resetAuthError } = authSlice.actions;
-export default authSlice.reducer
+export const { resetUser, resetUserError } = userSlice.actions;
+export default userSlice.reducer

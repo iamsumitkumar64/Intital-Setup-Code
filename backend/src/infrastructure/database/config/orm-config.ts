@@ -16,11 +16,11 @@ export const dataSourceOptions =
             database: configService.get<string>('DB_POSTGRES_DATABASE') || 'db',
             logging: Boolean(configService.get<boolean>('DB_POSTGRES_LOGGING')) || false,
             entities: [
-                path.join(__dirname, '..', '..', 'domain', '**', '*.entity.{js,ts}'),
+                path.join(__dirname, '..', '..', '..', 'domain', '**', '*.entity.{js,ts}'),
             ],
             synchronize: false,
             migrations: [
-                path.join(__dirname, 'migrations', '*.{js,ts}'),
+                path.join(__dirname, '..', 'migrations', '*.{js,ts}'),
             ],
         }
     );

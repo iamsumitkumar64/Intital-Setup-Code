@@ -32,7 +32,6 @@ export class LoginUserHandler {
     const token = await this.jwtHelperService.generateJwtToken(user);
 
     return {
-      message: 'Logged In User',
       access_token: token,
       user: {
         username: user.username,

@@ -5,7 +5,7 @@ import * as cookie from 'cookie';
 
 @Injectable()
 export class CookieService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(private readonly configService: ConfigService) { }
 
   getCookieOptions(): CookieOptions {
     const isProd = this.configService.get<string>('NODE_ENV') === 'production';
@@ -24,11 +24,6 @@ export class CookieService {
 
   clearCookie(res: Response, name: string) {
     res.clearCookie(name, this.getCookieOptions());
-  }
-
-  resetCookies(req: Request, name: string): string | undefined {
-    const cookies = req.cookies as Record<string, string> | undefined;
-    return cookies?.[name];
   }
 
   static extractFromHeader(cookieHeader: string | undefined, name: string): string | undefined {

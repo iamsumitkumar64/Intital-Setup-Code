@@ -32,7 +32,6 @@ export class RegisterUserHandler {
     const token = await this.jwtHelperService.generateJwtToken(registeredUser);
 
     return {
-      message: 'Registered User',
       access_token: token,
       user: {
         username: registeredUser.username,

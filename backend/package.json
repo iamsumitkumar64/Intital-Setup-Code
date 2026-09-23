@@ -21,9 +21,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "typeorm-ts-node-commonjs",
     "seed": "node dist/infrastructure/database/seed/seeder.seed.js",
-    "migration:generate": "npm run typeorm -- -d dist/infrastructure/database/orm-config.js migration:generate src/infrastructure/database/migrations/InitMigration",
-    "migration:run": "typeorm migration:run -d dist/infrastructure/database/orm-config.js",
-    "migration:revert": "typeorm migration:revert -d dist/infrastructure/database/orm-config.js"
+    "migration:generate": "npm run typeorm -- -d dist/infrastructure/database/config/orm-config.js migration:generate src/infrastructure/database/migrations/InitMigration",
+    "migration:run": "typeorm migration:run -d dist/infrastructure/database/config/orm-config.js",
+    "migration:revert": "typeorm migration:revert -d dist/infrastructure/database/config/orm-config.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.28",

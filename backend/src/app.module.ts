@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { dataSource } from './infrastructure/database/orm-config';
+import { dataSource } from './infrastructure/database/config/orm-config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from './infrastructure/repository/user-repository/user-repository';

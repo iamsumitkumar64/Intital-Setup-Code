@@ -17,6 +17,10 @@ export class LoginUserController {
     async loginUser(@Body() body: LoginUserDto, @Res({ passthrough: true }) res: Response) {
         const { access_token, ...data } = await this.loginUserHandler.handle(body);
         this.cookieService.setCookie(res, 'token', access_token);
-        return data;
+        this.cookieService.setCookie(res, 'role', data.user.role);
+        return {
+            message: 'Logged In User',
+            data: data
+        };
     }
 }
