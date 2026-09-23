@@ -12,7 +12,7 @@ export class CloudinaryService {
         });
     }
 
-    createUploadSignature(folder: string = 'my-app') {
+    createUploadSignature(folder: string = 'setup') {
         const timestamp = Math.floor(Date.now() / 1000);
         const cloudName = this.configService.get<string>('CLOUDINARY_CLOUD_NAME');
         const apiKey = this.configService.get<string>('CLOUDINARY_API_KEY');

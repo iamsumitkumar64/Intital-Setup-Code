@@ -9,7 +9,7 @@ curl --location --request POST 'localhost:8090/upload/signed-url' \
 curl --location --request GET 'https://api.cloudinary.com/v1_1/gg5dgagb/auto/upload' \
 --form 'timestamp="1789973189"' \
 --form 'signature="9e750baf3b2d27bcd8f35888f2572a5eb3a45a65"' \
---form 'folder=" my-app"' \
+--form 'folder="setup"' \
 --form 'api_key="847263915204731"' \
 --form 'file=@"/home/desktop-1/Downloads/demo/instruction.txt"'
 
