@@ -11,28 +11,17 @@ FROM ${NODE_IMAGE} AS base
 
 WORKDIR /app
 
+# Install dumb-init
+RUN apk --no-cache add dumb-init
+
+# Ensure default node user owns /app
+RUN mkdir -p /app && chown -R node:node /app
+
 # Environment variables
 ENV HOSTNAME="0.0.0.0"
 
-# default node user owns /app
-RUN chown -R node:node /app
-
-# Copy dependency files
-COPY --chown=node:node package.json package-lock.json ./
-
 # Switch to default non-root user
 USER node
-
-# Install locked dependencies for the build
-RUN npm ci
-
-# Copy source code and configuration
-COPY --chown=node:node tsconfig.json tsconfig.build.json nest-cli.json ./
-COPY --chown=node:node src/ ./src/
-
-# Expose the application port
-EXPOSE 8090
-
 
 
 
@@ -42,6 +31,18 @@ EXPOSE 8090
 
 # Stage 2: dev runtime
 FROM base AS dev
+
+# Copy dependency files
+COPY --chown=node:node package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy source code and configuration
+COPY --chown=node:node . .
+
+# Expose the application port
+EXPOSE 8090
 
 # Start the application
 CMD ["npm", "run", "start:dev"]
@@ -54,11 +55,17 @@ CMD ["npm", "run", "start:dev"]
 
 
 # Stage 3: Build
-FROM base AS builder
+FROM base AS build
 
-# Build the NestJS application
-RUN npm run build
+# Copy dependency files
+COPY --chown=node:node package*.json ./
 
+# Copy source code and configuration
+COPY --chown=node:node . .
+
+# Install locked dependencies, build and prune dev dependencies
+RUN npm ci && npm cache clean --force
+RUN npm run build && npm prune --production
 
 
 
@@ -67,31 +74,15 @@ RUN npm run build
 
 
 # Stage 4: Production runtime
-FROM ${NODE_IMAGE} AS production
-
-WORKDIR /app
-
-# Install dumb-init for proper signal forwarding
-RUN apk add --no-cache dumb-init
-
-# Ensure default node user owns /app
-RUN chown -R node:node /app
+FROM base AS production
 
 # Environment variables
 ENV NODE_ENV=production
-ENV HOSTNAME="0.0.0.0"
 
-# Copy package files with --chown
-COPY --chown=node:node package.json package-lock.json ./
-
-# Switch to default non-root user
-USER node
-
-# Clean install production dependencies
-RUN npm ci --omit=dev
-
-# Copy compiled build output from builder
-COPY --from=builder --chown=node:node /app/dist ./dist
+# Copy production dependencies and compiled build output from build
+COPY --chown=node:node --from=build /app/node_modules ./node_modules
+COPY --chown=node:node --from=build /app/dist ./dist
+COPY --chown=node:node --from=build /app/package*.json ./
 
 # Expose the application port
 EXPOSE 8090

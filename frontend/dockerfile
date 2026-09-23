@@ -11,6 +11,12 @@ FROM ${NODE_IMAGE} AS base
 
 WORKDIR /app
 
+# Install dumb-init
+RUN apk --no-cache add dumb-init
+
+# Ensure default node user owns /app
+RUN mkdir -p /app && chown -R node:node /app
+
 # Build arguments for Next.js NEXT_PUBLIC_* variables
 ARG NEXT_PUBLIC_BACKEND_URL
 ARG NEXT_PUBLIC_FRONTEND_URL
@@ -23,25 +29,11 @@ ENV NEXT_PUBLIC_FRONTEND_URL=${NEXT_PUBLIC_FRONTEND_URL}
 ENV NEXT_PUBLIC_DEFAULT_PAGE=${NEXT_PUBLIC_DEFAULT_PAGE}
 ENV NEXT_PUBLIC_DEFAULT_LIMIT=${NEXT_PUBLIC_DEFAULT_LIMIT}
 ENV HOSTNAME="0.0.0.0"
-
-# default node user owns /app
-RUN chown -R node:node /app
-
-# Copy dependency files
-COPY --chown=node:node package.json package-lock.json ./
-COPY --chown=node:node next.config.ts /app/next.config.ts
+ENV PORT=3000
 
 # Switch to default non-root user
 USER node
 
-# Install locked dependencies for the build
-RUN npm ci
-
-# Copy source files
-COPY --chown=node:node . .
-
-# Expose the application port
-EXPOSE 3000
 
 
 
@@ -51,7 +43,19 @@ EXPOSE 3000
 # Stage 2: dev runtime
 FROM base AS dev
 
-# Start the application in dev mode
+# Copy dependency files
+COPY --chown=node:node package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy source code and configuration
+COPY --chown=node:node . .
+
+# Expose the application port
+EXPOSE 3000
+
+# Start the application
 CMD ["npm", "run", "dev"]
 
 
@@ -61,9 +65,16 @@ CMD ["npm", "run", "dev"]
 
 
 # Stage 3: Build
-FROM base AS builder
+FROM base AS build
 
-# Build the NextJS application
+# Copy dependency files
+COPY --chown=node:node package*.json ./
+
+# Copy source code and configuration
+COPY --chown=node:node . .
+
+# Install locked dependencies, build and prune dev dependencies
+RUN npm ci && npm cache clean --force
 RUN npm run build
 
 
@@ -73,29 +84,17 @@ RUN npm run build
 
 
 # Stage 4: Production runtime
-FROM ${NODE_IMAGE} AS production
-
-WORKDIR /app
-
-# Install dumb-init for proper signal forwarding
-RUN apk add --no-cache dumb-init
-
-# default node user owns /app
-RUN chown -R node:node /app
+FROM base AS production
 
 # Environment variables
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
 
-# Copy built application output from builder
-COPY --from=builder --chown=node:node /app/public ./public
-COPY --from=builder --chown=node:node /app/.next/standalone ./
-COPY --from=builder --chown=node:node /app/.next/static ./.next/static
-
-# Switch to default non-root user
-USER node
+# Copy built application output from build
+COPY --chown=node:node --from=build /app/public ./public
+COPY --chown=node:node --from=build /app/.next/standalone ./
+COPY --chown=node:node --from=build /app/.next/static ./.next/static
+COPY --chown=node:node --from=build /app/package*.json ./
 
 # Expose the application port
 EXPOSE 3000
