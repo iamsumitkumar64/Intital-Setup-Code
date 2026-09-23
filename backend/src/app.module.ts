@@ -6,7 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from './infrastructure/repository/user-repository/user-repository';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { SocketModule } from './infrastructure/socket/socket.module';
+import { SocketModule } from './infrastructure/service/socket/socket.module';
 import { AuthModule } from './feature/auth/auth.module';
 import { DataSourceOptions } from 'typeorm';
 import { UploadModule } from './feature/upload/upload.module';

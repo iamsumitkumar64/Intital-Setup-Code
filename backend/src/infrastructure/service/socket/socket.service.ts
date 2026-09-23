@@ -8,8 +8,8 @@ import { Server, Socket } from 'socket.io';
 import { UserRepository } from 'src/infrastructure/repository/user-repository/user-repository';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { JwtHelperService } from '../service/jwt/jwt.service';
-import { CookieService } from '../service/cookie/cookie.service';
+import { JwtHelperService } from '../../service/jwt/jwt.service';
+import { CookieService } from '../../service/cookie/cookie.service';
 
 const configService = new ConfigService();
 
