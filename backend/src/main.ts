@@ -4,7 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { initializeTransactionalContext, StorageDriver } from 'typeorm-transactional';
 import cookieParser from 'cookie-parser';
-import { CommonExceptionFilter } from './infrastructure/exception-filter';
+import { CommonExceptionFilter } from './infrastructure/exception-filter/common-exception/common-exception.filter';
 
 async function bootstrap() {
   initializeTransactionalContext({ storageDriver: StorageDriver.ASYNC_LOCAL_STORAGE });
@@ -18,7 +18,7 @@ async function bootstrap() {
     origin: [configService.get<string>('FRONTEND_URL') ?? 'http://localhost:3000'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'authorization'],
+    allowedHeaders: ['Content-Type', 'authorization', 'Authorization'],
   });
 
   app.useGlobalPipes(new ValidationPipe({

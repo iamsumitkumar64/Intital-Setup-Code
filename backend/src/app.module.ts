@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { dataSource } from './infrastructure/database/config/orm-config';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from './infrastructure/repository/user-repository/user-repository';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -15,7 +15,7 @@ import { BcryptService } from './infrastructure/service/bcrypt/bcrypt.service';
 import { JwtHelperService } from './infrastructure/service/jwt/jwt.service';
 import { CloudinaryService } from './infrastructure/service/cloudinary/cloudinary.service';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthenticateGuard } from './infrastructure/guard';
+import { AuthenticateGuard } from './infrastructure/guard/authenticate/authenticate.guard';
 
 @Module({
   imports: [
@@ -40,8 +40,11 @@ import { AuthenticateGuard } from './infrastructure/guard';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_REGISTER_SECRET'),
+      useFactory: (configService: ConfigService): JwtModuleOptions => ({
+        secret: configService.get<string>('JWT_ACCESS_SECRET'),
+        signOptions: {
+          expiresIn: (configService.get<string>('JWT_ACCESS_EXPIRE_IN') ?? '7d') as any,
+        },
       }),
       global: true,
     }),

@@ -3,7 +3,7 @@ import type { Response } from "express";
 import { RegisterUserHandler } from "./register-user.handler";
 import { RegisterUserDto } from "./register-user.dto";
 import { CookieService } from "src/infrastructure/service/cookie/cookie.service";
-import { PublicAuthenticate } from "src/infrastructure/decorator";
+import { PublicAuthenticate } from "src/infrastructure/decorator/public-authenticate/public-authenticate.decorator";
 
 
 @Controller('/register')
