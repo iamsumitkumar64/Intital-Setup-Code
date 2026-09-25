@@ -65,7 +65,7 @@ COPY --chown=node:node . .
 
 # Install locked dependencies, build and prune dev dependencies
 RUN npm ci && npm cache clean --force
-RUN npm run build && npm prune --production
+RUN npm run build
 
 
 
