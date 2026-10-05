@@ -6,7 +6,7 @@ import { CookieService } from "../../../infrastructure/service/cookie/cookie.ser
 import { PublicAuthenticate } from "../../../infrastructure/decorator/public-authenticate/public-authenticate.decorator.js";
 
 
-@Controller('/register')
+@Controller('/auth/register')
 export class RegisterUserController {
     constructor(
         private readonly registerUserHandler: RegisterUserHandler,

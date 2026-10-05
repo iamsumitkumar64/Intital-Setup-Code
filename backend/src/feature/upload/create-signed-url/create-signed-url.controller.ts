@@ -3,7 +3,7 @@ import { CreateSignedUrlHandler } from './create-signed-url.handler.js';
 import { CreateSignedUrlDto } from './create-signed-url.dto.js';
 import { PublicAuthenticate } from '../../../infrastructure/decorator/public-authenticate/public-authenticate.decorator.js';
 
-@Controller('/signed-url')
+@Controller('/upload/signed-url')
 export class CreateSignedUrlController {
     constructor(
         private readonly createSignedUrlHandler: CreateSignedUrlHandler,

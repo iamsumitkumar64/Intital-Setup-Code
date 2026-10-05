@@ -5,7 +5,7 @@ import { LoginUserDto } from "./login-user.dto.js";
 import { CookieService } from "../../../infrastructure/service/cookie/cookie.service.js";
 import { PublicAuthenticate } from "../../../infrastructure/decorator/public-authenticate/public-authenticate.decorator.js";
 
-@Controller('/login')
+@Controller('/auth/login')
 export class LoginUserController {
     constructor(
         private readonly loginUserHandler: LoginUserHandler,
