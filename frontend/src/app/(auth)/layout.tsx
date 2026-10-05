@@ -7,7 +7,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     return (
         <Box className={styles.container}>
             <Box className={styles.leftContainer}>
-                <AuthLayoutComp bgImage="auth-bg.png" description="Be one of Us" title="Setup" />
+                <AuthLayoutComp description="Be one of Us" title="Setup" />
             </Box>
 
             <Box className={styles.rightContainer}>
