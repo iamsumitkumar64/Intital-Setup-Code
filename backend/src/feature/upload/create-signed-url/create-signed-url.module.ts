@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { CreateSignedUrlController } from './create-signed-url.controller';
-import { CreateSignedUrlHandler } from './create-signed-url.handler';
-import { CloudinaryService } from 'src/infrastructure/service/cloudinary/cloudinary.service';
+import { CreateSignedUrlController } from './create-signed-url.controller.js';
+import { CreateSignedUrlHandler } from './create-signed-url.handler.js';
+import { CloudinaryService } from '../../../infrastructure/service/cloudinary/cloudinary.service.js';
 
 @Module({
   imports: [],

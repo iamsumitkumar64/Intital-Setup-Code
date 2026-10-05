@@ -1,4 +1,4 @@
-import { UserEntity } from 'src/domain/user/user.entity';
+import { UserEntity } from "../../user.entity.js";
 
 // can be used as DI Token
 export const USER_REPOSITORY = Symbol('IUserRepository');

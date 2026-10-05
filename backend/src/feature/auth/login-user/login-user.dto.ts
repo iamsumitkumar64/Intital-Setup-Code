@@ -1,5 +1,5 @@
 import { IsString, IsEmail, IsNotEmpty, MinLength } from 'class-validator';
-import { NormalizeWhitespace } from 'src/domain/user/transform';
+import { NormalizeWhitespace } from '../../../domain/user/transform/index.js';
 
 export class LoginUserDto {
     @NormalizeWhitespace({ toLowerCase: true })

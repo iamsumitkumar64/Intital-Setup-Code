@@ -1,6 +1,6 @@
 import { Controller, HttpCode, HttpStatus, Post, Res } from '@nestjs/common';
 import type { Response } from 'express';
-import { CookieService } from 'src/infrastructure/service/cookie/cookie.service';
+import { CookieService } from '../../../infrastructure/service/cookie/cookie.service.js';
 
 @Controller('/logout')
 export class LogOutUserController {

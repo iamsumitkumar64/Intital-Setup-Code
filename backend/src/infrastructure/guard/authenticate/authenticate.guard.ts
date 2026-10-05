@@ -5,8 +5,8 @@ import {
     UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { UserRepository } from '../../repository/user-repository/user-repository';
-import { JwtHelperService } from '../../service/jwt/jwt.service';
+import { UserRepository } from '../../repository/user-repository/user-repository.js';
+import { JwtHelperService } from '../../service/jwt/jwt.service.js';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()

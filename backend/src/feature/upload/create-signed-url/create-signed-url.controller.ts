@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { CreateSignedUrlHandler } from './create-signed-url.handler';
-import { CreateSignedUrlDto } from './create-signed-url.dto';
-import { PublicAuthenticate } from 'src/infrastructure/decorator/public-authenticate/public-authenticate.decorator';
+import { CreateSignedUrlHandler } from './create-signed-url.handler.js';
+import { CreateSignedUrlDto } from './create-signed-url.dto.js';
+import { PublicAuthenticate } from '../../../infrastructure/decorator/public-authenticate/public-authenticate.decorator.js';
 
 @Controller('/signed-url')
 export class CreateSignedUrlController {

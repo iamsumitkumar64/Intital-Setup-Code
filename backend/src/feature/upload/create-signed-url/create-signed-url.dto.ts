@@ -1,5 +1,5 @@
 import { IsOptional, IsString } from 'class-validator';
-import { NormalizeWhitespace } from 'src/domain/upload/transform';
+import { NormalizeWhitespace } from '../../../domain/upload/transform/index.js';
 
 export class CreateSignedUrlDto {
   @IsOptional()

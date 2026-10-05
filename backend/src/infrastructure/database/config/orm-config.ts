@@ -1,7 +1,11 @@
 import { DataSource, DataSourceOptions } from "typeorm";
 import { ConfigService } from "@nestjs/config";
 import * as dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
 import * as path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -16,11 +20,17 @@ export const dataSourceOptions =
             database: configService.get<string>('DB_POSTGRES_DATABASE') || 'db',
             logging: Boolean(configService.get<boolean>('DB_POSTGRES_LOGGING')) || false,
             entities: [
-                path.join(__dirname, '..', '..', '..', 'domain', '**', '*.entity.{js,ts}'),
+                path.join(
+                    __dirname,
+                    '../../../domain/**/*.entity.{js,ts}',
+                ),
             ],
             synchronize: false,
-            migrations: [
-                path.join(__dirname, '..', 'migrations', '*.{js,ts}'),
+            migrations:  [
+                path.join(
+                    __dirname,
+                    '../migrations/*.{js,ts}',
+                ),
             ],
         }
     );

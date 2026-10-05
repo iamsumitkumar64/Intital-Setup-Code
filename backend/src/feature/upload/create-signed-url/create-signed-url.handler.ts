@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSignedUrlDto } from './create-signed-url.dto';
-import { CloudinaryService } from 'src/infrastructure/service/cloudinary/cloudinary.service';
+import { CreateSignedUrlDto } from './create-signed-url.dto.js';
 import { ConfigService } from '@nestjs/config';
+import { CloudinaryService } from '../../../infrastructure/service/cloudinary/cloudinary.service.js';
 
 @Injectable()
 export class CreateSignedUrlHandler {

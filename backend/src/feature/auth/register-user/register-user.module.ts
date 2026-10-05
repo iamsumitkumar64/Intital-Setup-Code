@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { RegisterUserController } from './register-user.controller';
-import { RegisterUserHandler } from './register-user.handler';
-import { UserRepository } from 'src/infrastructure/repository/user-repository/user-repository';
-import { CookieService } from 'src/infrastructure/service/cookie/cookie.service';
-import { JwtHelperService } from 'src/infrastructure/service/jwt/jwt.service';
-import { BcryptService } from 'src/infrastructure/service/bcrypt/bcrypt.service';
+import { RegisterUserController } from './register-user.controller.js';
+import { RegisterUserHandler } from './register-user.handler.js';
+import { JwtHelperService } from '../../../infrastructure/service/jwt/jwt.service.js';
+import { UserRepository } from '../../../infrastructure/repository/user-repository/user-repository.js';
+import { BcryptService } from '../../../infrastructure/service/bcrypt/bcrypt.service.js';
+import { CookieService } from '../../../infrastructure/service/cookie/cookie.service.js';
 
 @Module({
   imports: [],

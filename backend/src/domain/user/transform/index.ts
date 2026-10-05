@@ -1,1 +1,1 @@
-export * from './normalize-whitespace/normalize-whitespace';
+export * from './normalize-whitespace/normalize-whitespace.js';

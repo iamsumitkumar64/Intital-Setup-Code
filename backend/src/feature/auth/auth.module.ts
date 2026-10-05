@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { RouterModule } from "@nestjs/core";
-import { LoginUserModule } from "./login-user/login-user.module";
-import { RegisterUserModule } from "./register-user/register-user.module";
-import { LogOutUserModule } from "./log-out-user/log-out-user.module";
+import { LoginUserModule } from "./login-user/login-user.module.js";
+import { RegisterUserModule } from "./register-user/register-user.module.js";
+import { LogOutUserModule } from "./log-out-user/log-out-user.module.js";
 
 @Module({
     imports: [

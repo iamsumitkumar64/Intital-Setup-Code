@@ -1,6 +1,6 @@
 import { IsString, IsEmail, IsNotEmpty, MinLength, IsEnum } from 'class-validator';
-import { UserRoleEnum } from 'src/domain/user/enum';
-import { NormalizeWhitespace } from 'src/domain/user/transform';
+import { NormalizeWhitespace } from '../../../domain/user/transform/index.js';
+import { UserRoleEnum } from '../../../domain/user/enum/index.js';
 
 export class RegisterUserDto {
     @NormalizeWhitespace()

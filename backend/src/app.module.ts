@@ -1,24 +1,35 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { dataSource } from './infrastructure/database/config/orm-config';
+import { createObserveModule } from '@nestjs/observe';
+import { AppController } from './app.controller.js';
+import { AppService } from './app.service.js';
+import { dataSource } from './infrastructure/database/config/orm-config.js';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserRepository } from './infrastructure/repository/user-repository/user-repository';
+import { UserRepository } from './infrastructure/repository/user-repository/user-repository.js';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { SocketModule } from './infrastructure/service/socket/socket.module';
-import { AuthModule } from './feature/auth/auth.module';
+import { SocketModule } from './infrastructure/service/socket/socket.module.js';
+import { AuthModule } from './feature/auth/auth.module.js';
 import { DataSourceOptions } from 'typeorm';
-import { UploadModule } from './feature/upload/upload.module';
-import { createTransactionalDataSourceService } from './infrastructure/service/typeorm-transactional/typeorm-transactional.service';
-import { BcryptService } from './infrastructure/service/bcrypt/bcrypt.service';
-import { JwtHelperService } from './infrastructure/service/jwt/jwt.service';
-import { CloudinaryService } from './infrastructure/service/cloudinary/cloudinary.service';
+import { UploadModule } from './feature/upload/upload.module.js';
+import { createTransactionalDataSourceService } from './infrastructure/service/typeorm-transactional/typeorm-transactional.service.js';
+import { BcryptService } from './infrastructure/service/bcrypt/bcrypt.service.js';
+import { JwtHelperService } from './infrastructure/service/jwt/jwt.service.js';
+import { CloudinaryService } from './infrastructure/service/cloudinary/cloudinary.service.js';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthenticateGuard } from './infrastructure/guard/authenticate/authenticate.guard';
+import { AuthenticateGuard } from './infrastructure/guard/authenticate/authenticate.guard.js';
+
+export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
 @Module({
   imports: [
+    // Distributed tracing, auto-correlated logs, request/job metrics, error
+    // telemetry, alarms, and more — out of the box. Sign up at https://observe.nestjs.com
+    ObserveModule.forRoot({
+      appKey: 'YOUR_APP_KEY',
+      appSecret: 'YOUR_APP_SECRET',
+      serviceId: 'backend',
+    }),
+
     ConfigModule.forRoot({
       isGlobal: true,
     }),

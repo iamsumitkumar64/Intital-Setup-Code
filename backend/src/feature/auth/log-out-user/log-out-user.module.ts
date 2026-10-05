@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { LogOutUserController } from './log-out-user.controller';
-import { CookieService } from 'src/infrastructure/service/cookie/cookie.service';
+import { LogOutUserController } from './log-out-user.controller.js';
+import { CookieService } from '../../../infrastructure/service/cookie/cookie.service.js';
 
 @Module({
   imports: [],

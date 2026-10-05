@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from 'src/infrastructure/repository/user-repository/user-repository';
-import { BcryptService } from 'src/infrastructure/service/bcrypt/bcrypt.service';
-import { RegisterUserDto } from './register-user.dto';
-import { JwtHelperService } from 'src/infrastructure/service/jwt/jwt.service';
-import { UserAlreadyExistsException } from 'src/domain/user/exception';
+import { RegisterUserDto } from './register-user.dto.js';
 import { Transactional } from 'typeorm-transactional';
+import { UserRepository } from '../../../infrastructure/repository/user-repository/user-repository.js';
+import { JwtHelperService } from '../../../infrastructure/service/jwt/jwt.service.js';
+import { BcryptService } from '../../../infrastructure/service/bcrypt/bcrypt.service.js';
+import { UserAlreadyExistsException } from '../../../domain/user/exception/index.js';
 
 @Injectable()
 export class RegisterUserHandler {
