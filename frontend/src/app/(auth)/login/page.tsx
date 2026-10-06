@@ -57,61 +57,6 @@ export default function LoginForm() {
                     Sign In
                 </Typography>
 
-                <Button
-                    variant="outlined"
-                    className={styles.providerLoginBox}
-                    onClick={handleGoogleLogin}
-                >
-                    {/* <GoogleIcon /> */}
-                    <Image
-                        src={'/google.png'}
-                        alt="google icon"
-                        width={25}
-                        height={25}
-                    />
-                    <Typography>
-                        Login with Google
-                    </Typography>
-                </Button>
-
-                <Button
-                    variant="outlined"
-                    className={styles.providerLoginBox}
-                    onClick={handleGoogleLogin}
-                >
-                    {/* <MicroSoftIcon /> */}
-                    <Image
-                        src={'/microsoft.png'}
-                        alt="google icon"
-                        width={25}
-                        height={25}
-                    />
-                    <Typography>
-                        Login with microsoft
-                    </Typography>
-                </Button>
-
-                <Button
-                    variant="outlined"
-                    className={styles.providerLoginBox}
-                    onClick={handleGoogleLogin}
-                >
-                    <Box>
-                        {/* <GitHubIcon /> */}
-                        <Image
-                            src={'/github.png'}
-                            alt="google icon"
-                            width={25}
-                            height={25}
-                        />
-                    </Box>
-                    <Typography>
-                        Login with github
-                    </Typography>
-                </Button>
-
-                <Divider className={styles.divider}>OR</Divider>
-
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <Box className={styles.field}>
                         <TextField
