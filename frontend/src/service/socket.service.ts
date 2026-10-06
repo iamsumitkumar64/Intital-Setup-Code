@@ -2,12 +2,12 @@ import { io, Socket } from "socket.io-client";
 
 let socket: Socket | null = null;
 
-export const connectSocket = (token?: string): Socket => {
+export const connectSocket = (access_token?: string): Socket => {
     const socketUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8090";
 
     socket = io(socketUrl, {
         withCredentials: true,
-        ...(token ? { auth: { token } } : {}),
+        ...(access_token ? { auth: { access_token } } : {}),
     });
 
     return socket;

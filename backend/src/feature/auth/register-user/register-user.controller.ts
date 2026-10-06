@@ -17,7 +17,7 @@ export class RegisterUserController {
     @Post()
     async registerUser(@Body() body: RegisterUserDto, @Res({ passthrough: true }) res: Response) {
         const { access_token, ...data } = await this.registerUserHandler.handle(body);
-        this.cookieService.setCookie(res, 'token', access_token);
+        this.cookieService.setCookie(res, 'access_token', access_token);
         this.cookieService.setCookie(res, 'role', data.user.role);
         return {
             message: 'Registered User',

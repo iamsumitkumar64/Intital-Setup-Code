@@ -4,7 +4,7 @@ const publicRoutes = ['/public', '/login', '/signup'];
 const authBlockRoutes = ['/login', '/signup'];
 
 export default function proxy(req: NextRequest) {
-    const credentials = req.cookies.get("token")?.value;
+    const credentials = req.cookies.get("access_token")?.value;
     const role = req.cookies.get("role")?.value;
     const pathname = req.nextUrl.pathname;
 

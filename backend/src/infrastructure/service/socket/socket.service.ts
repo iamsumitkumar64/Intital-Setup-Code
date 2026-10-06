@@ -34,15 +34,15 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
 
     async handleConnection(client: Socket) {
         try {
-            const token = client.handshake.auth?.token ||
-                CookieService.extractFromHeader(client.handshake.headers.cookie, 'token') ||
+            const access_token = client.handshake.auth?.access_token ||
+                CookieService.extractFromHeader(client.handshake.headers.cookie, 'access_token') ||
                 client.handshake.headers.authorization;
-            if (!token) {
+            if (!access_token) {
                 client.disconnect();
                 return;
             }
 
-            const decoded = await this.jwtHelperService.verifyJwtToken(token.startsWith('Bearer ') ? token.substring(7) : token);
+            const decoded = await this.jwtHelperService.verifyJwtToken(access_token.startsWith('Bearer ') ? access_token.substring(7) : access_token);
             const user = await this.userRepository.findByUuid(decoded.uuid);
 
             if (!user) {

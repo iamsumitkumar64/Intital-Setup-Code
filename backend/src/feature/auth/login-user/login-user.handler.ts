@@ -3,7 +3,8 @@ import { LoginUserDto } from './login-user.dto.js';
 import { UserRepository } from '../../../infrastructure/repository/user-repository/user-repository.js';
 import { JwtHelperService } from '../../../infrastructure/service/jwt/jwt.service.js';
 import { BcryptService } from '../../../infrastructure/service/bcrypt/bcrypt.service.js';
-import { InvalidCredentialsException, UserNotFoundException } from '../../../domain/user/exception/index.js';
+import { UserNotFoundException } from '../../../domain/user/exception/user-not-found/user-not-found.exception.js';
+import { InvalidCredentialsException } from '../../../domain/user/exception/invalid-credentials/invalid-credentials.exception.js';
 
 @Injectable()
 export class LoginUserHandler {
@@ -26,10 +27,10 @@ export class LoginUserHandler {
       throw new InvalidCredentialsException();
     }
 
-    const token = await this.jwtHelperService.generateJwtToken(user);
+    const access_token = await this.jwtHelperService.generateJwtToken(user);
 
     return {
-      access_token: token,
+      access_token: access_token,
       user: {
         username: user.username,
         email: user.email,

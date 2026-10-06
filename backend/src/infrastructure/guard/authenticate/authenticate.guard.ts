@@ -34,15 +34,15 @@ export class AuthenticateGuard implements CanActivate {
 
         const req = context.switchToHttp().getRequest<Request>();
 
-        // Get token
-        const token = req.cookies?.token || req.headers.authorization;
-        if (!token || Array.isArray(token)) {
+        // Get access_token
+        const access_token = req.cookies?.access_token || req.headers.authorization;
+        if (!access_token || Array.isArray(access_token)) {
             throw new UnauthorizedException('Unauthorized Access');
         }
 
         // Remove Bearer prefix
-        const jwtToken = token.startsWith('Bearer ')
-            ? token.substring(7) : token;
+        const jwtToken = access_token.startsWith('Bearer ')
+            ? access_token.substring(7) : access_token;
 
         // Verify JWT
         const user = await this.jwtHelpService.verifyJwtToken(jwtToken);

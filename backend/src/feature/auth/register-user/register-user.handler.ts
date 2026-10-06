@@ -4,7 +4,7 @@ import { Transactional } from 'typeorm-transactional';
 import { UserRepository } from '../../../infrastructure/repository/user-repository/user-repository.js';
 import { JwtHelperService } from '../../../infrastructure/service/jwt/jwt.service.js';
 import { BcryptService } from '../../../infrastructure/service/bcrypt/bcrypt.service.js';
-import { UserAlreadyExistsException } from '../../../domain/user/exception/index.js';
+import { UserAlreadyExistsException } from '../../../domain/user/exception/user-already-exists/user-already-exists.exception.js';
 
 @Injectable()
 export class RegisterUserHandler {
@@ -28,11 +28,11 @@ export class RegisterUserHandler {
     // register user in DB
     const registeredUser = await this.userRepository.createUser(body);
 
-    // generate token for accessing resources
-    const token = await this.jwtHelperService.generateJwtToken(registeredUser);
+    // generate access_token for accessing resources
+    const access_token = await this.jwtHelperService.generateJwtToken(registeredUser);
 
     return {
-      access_token: token,
+      access_token: access_token,
       user: {
         username: registeredUser.username,
         email: registeredUser.email,
