@@ -5,6 +5,7 @@ import {
     signupUser,
     loginUser,
     logoutUser,
+    firebaseGoogleLogin,
 } from "./user-action"
 import { UserState } from "./user-type";
 
@@ -51,6 +52,23 @@ const userSlice = createSlice({
                 }
             })
             .addAsyncThunk(loginUser, {
+                pending: (state) => {
+                    state.loading = true;
+                    state.status = "pending";
+                },
+                fulfilled: (state, action) => {
+                    state.loading = false;
+                    state.user = action.payload.data.user;
+                    state.status = "succeed";
+                    state.error = null;
+                },
+                rejected: (state, action) => {
+                    state.loading = false;
+                    state.status = "rejected";
+                    state.error = action.payload as string;
+                }
+            })
+            .addAsyncThunk(firebaseGoogleLogin, {
                 pending: (state) => {
                     state.loading = true;
                     state.status = "pending";

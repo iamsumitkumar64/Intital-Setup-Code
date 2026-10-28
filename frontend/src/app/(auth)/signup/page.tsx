@@ -6,7 +6,8 @@ import { AppDispatch } from "@/redux/store"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signupSchema, SignupSchemaType } from "@/schemas/signup"
-import { signupUser } from "@/redux/feature/user/user-action"
+import { signupUser, firebaseGoogleLogin } from "@/redux/feature/user/user-action"
+import { signInWithGoogle } from "@/service/firebase.service"
 import { useRouter } from "next/navigation"
 
 import {
@@ -15,10 +16,12 @@ import {
     Card,
     MenuItem,
     TextField,
-    Typography
+    Typography,
+    Divider
 } from "@mui/material"
 import { UserRoleEnum } from "@/redux/feature/user/user-role.enum"
 import { enqueueSnackbar } from "notistack"
+import Image from "next/image"
 
 export default function SignupForm() {
     const dispatch = useDispatch<AppDispatch>();
@@ -44,12 +47,43 @@ export default function SignupForm() {
         }
     }
 
+    const handleGoogleLogin = async () => {
+        try {
+            const { idToken } = await signInWithGoogle();
+            await dispatch(firebaseGoogleLogin(idToken)).unwrap();
+            enqueueSnackbar("Successfully signed in with Google!", { variant: "success" });
+            router.replace("/");
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : String(error || "Google sign in failed");
+            enqueueSnackbar(message, { variant: "error" });
+            console.error(error);
+        }
+    }
+
     return (
         <Box className={styles.container}>
             <Card className={styles.formWrapper} elevation={3}>
                 <Typography variant="h5" className={styles.title}>
-                    Join Us! It's free
+                    Join Us! It&apos;s free
                 </Typography>
+
+                <Button
+                    variant="outlined"
+                    className={styles.providerLoginBox}
+                    onClick={handleGoogleLogin}
+                >
+                    <Image
+                        src={'/google.svg'}
+                        alt="google icon"
+                        width={22}
+                        height={22}
+                    />
+                    <Typography>
+                        Sign up with Google
+                    </Typography>
+                </Button>
+
+                <Divider className={styles.divider}>OR</Divider>
 
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <Box className={styles.field}>

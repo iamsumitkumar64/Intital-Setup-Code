@@ -60,6 +60,32 @@ export const loginUser = createAsyncThunk(
     }
 )
 
+export const firebaseGoogleLogin = createAsyncThunk(
+    "auth/firebaseGoogleLogin",
+    async (idToken: string, { rejectWithValue }) => {
+        try {
+            const res = await fetch(`${BACKEND_API_URL}/auth/firebase-login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({ idToken })
+            })
+
+            const result = await res.json()
+
+            if (!res.ok) throw new Error(result.message)
+
+            return result
+        } catch (error: unknown) {
+            console.log(error);
+            const message = error instanceof Error ? error.message : "Something went wrong";
+            return rejectWithValue(message)
+        }
+    }
+)
+
 export const logoutUser = createAsyncThunk(
     "auth/logout",
     async (_, { rejectWithValue }) => {

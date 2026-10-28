@@ -15,6 +15,7 @@ import { createTransactionalDataSourceService } from './infrastructure/service/t
 import { BcryptService } from './infrastructure/service/bcrypt/bcrypt.service.js';
 import { JwtHelperService } from './infrastructure/service/jwt/jwt.service.js';
 import { CloudinaryService } from './infrastructure/service/cloudinary/cloudinary.service.js';
+import { FirebaseService } from './infrastructure/service/firebase/firebase.service.js';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthenticateGuard } from './infrastructure/guard/authenticate/authenticate.guard.js';
 
@@ -72,6 +73,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     UserRepository,
     JwtHelperService,
     CloudinaryService,
+    FirebaseService,
     {
       provide: APP_GUARD,
       useClass: AuthenticateGuard

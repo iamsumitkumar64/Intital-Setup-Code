@@ -6,7 +6,8 @@ import { AppDispatch } from "@/redux/store"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { loginSchema, LoginSchemaType } from "@/schemas/login"
-import { loginUser } from "@/redux/feature/user/user-action"
+import { loginUser, firebaseGoogleLogin } from "@/redux/feature/user/user-action"
+import { signInWithGoogle } from "@/service/firebase.service"
 import { useRouter } from "next/navigation"
 
 import {
@@ -44,9 +45,14 @@ export default function LoginForm() {
 
     const handleGoogleLogin = async () => {
         try {
-            router.replace("/")
-        } catch (error) {
-            console.log(error)
+            const { idToken } = await signInWithGoogle();
+            await dispatch(firebaseGoogleLogin(idToken)).unwrap();
+            enqueueSnackbar("Successfully signed in with Google!", { variant: "success" });
+            router.replace("/");
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : String(error || "Google sign in failed");
+            enqueueSnackbar(message, { variant: "error" });
+            console.error(error);
         }
     }
 
@@ -56,6 +62,24 @@ export default function LoginForm() {
                 <Typography variant="h5" className={styles.title}>
                     Sign In
                 </Typography>
+
+                <Button
+                    variant="outlined"
+                    className={styles.providerLoginBox}
+                    onClick={handleGoogleLogin}
+                >
+                    <Image
+                        src={'/google.svg'}
+                        alt="google icon"
+                        width={22}
+                        height={22}
+                    />
+                    <Typography>
+                        Login with Google
+                    </Typography>
+                </Button>
+
+                <Divider className={styles.divider}>OR</Divider>
 
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <Box className={styles.field}>
